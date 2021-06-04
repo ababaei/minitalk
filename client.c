@@ -1,19 +1,16 @@
-#include <stdio.h>
 #include <signal.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <stdint.h>
 #include <stdio.h>
+#include <unistd.h>
 
-void send_char(char c, int serv_pid)
+void	send_char(char c, int serv_pid)
 {
-	int letter;
-	int b_let;
-	int i;
+	int	letter;
+	int	b_let;
+	int	i;
 
 	letter = c;
 	i = 0;
-	printf("letter = %d\n", letter);
 	while (i < 8)
 	{
 		b_let = letter % 2;
@@ -23,15 +20,13 @@ void send_char(char c, int serv_pid)
 		else if (b_let == 0)
 			kill(serv_pid, SIGUSR2);
 		usleep(100);
-		printf("%d", b_let);
 		i++;
 	}
-	printf("\n_____\n");
 }
 
-void str_convert(char *str, int serv_pid)
+void	str_convert(char *str, int serv_pid)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -41,13 +36,10 @@ void str_convert(char *str, int serv_pid)
 	}
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-	int pid;
-
-	pid = atoi(argv[1]);
-	if (argc < 2 || pid < 0)
+	if (argc <= 2 || atoi(argv[1]) < 0)
 		return (EXIT_FAILURE);
-	str_convert(argv[2], pid);
+	str_convert(argv[2], atoi(argv[1]));
 	return (EXIT_SUCCESS);
 }
