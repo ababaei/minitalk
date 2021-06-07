@@ -35,12 +35,23 @@ void	str_convert(char *str, int serv_pid)
 		send_char(str[i], serv_pid);
 		i++;
 	}
+	send_char('\0', serv_pid);
+}
+
+void sig_handler(int signum)
+{
+	printf("Message bien recu par le serveur.\n");
 }
 
 int	main(int argc, char *argv[])
 {
-	if (argc <= 2 || ft_atoi(argv[1]) < 0)
+	int pid;
+
+	pid = ft_atoi(argv[1]);
+	if (argc <= 2 || pid < 0)
 		return (EXIT_FAILURE);
-	str_convert(argv[2], ft_atoi(argv[1]));
+	signal(SIGUSR1, sig_handler);
+	str_convert(ft_itoa(getpid()), pid); 
+	str_convert(argv[2], pid);
 	return (EXIT_SUCCESS);
 }
