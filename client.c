@@ -39,7 +39,7 @@ void	str_convert(char *str, int serv_pid)
 
 int	main(int argc, char *argv[])
 {
-	if (argc <= 2 || ft_atoi(argv[1]) < 0)
+	if (argc <= 2 || argc > 3 || ft_atoi(argv[1]) < 0)
 		return (EXIT_FAILURE);
 	str_convert(argv[2], ft_atoi(argv[1]));
 	return (EXIT_SUCCESS);
