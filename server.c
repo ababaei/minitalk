@@ -19,45 +19,24 @@ int	ft_power(int nb, int power)
 	return (n);
 }
 
-void	convert_print(char *num)
-{
-	int	i;
-	int	decnum;
-	int	p;
-
-	i = 0;
-	decnum = 0;
-	p = 7;
-	while (num[i])
-	{
-		if (num[i] == '1')
-			decnum = decnum + ft_power(2, p);
-		i++;
-		p--;
-	}
-	write(1, &decnum, 1);
-}
-
 void	sig_handler(int signum)
 {
-	static char	buf[9];
-	static int	i = 7;
+	static int	decnum = 0;
+	static int	i = 0;
 
-	buf[8] = '\0';
 	if (signum == SIGUSR1)
 	{
-		buf[i] = '1';
-		i--;
+		decnum = decnum + ft_power(2, i);
+		i++;
 	}
 	if (signum == SIGUSR2)
+		i++;
+	if (i == 8)
 	{
-		buf[i] = '0';
-		i--;
-	}
-	if (i < 0)
-	{
-		convert_print(buf);
-		i = 7;
+		write(1, &decnum, 1);
+		i = 0;
+		decnum = 0;
+		usleep(25);
 	}
 }
 
