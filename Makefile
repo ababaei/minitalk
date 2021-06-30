@@ -1,15 +1,24 @@
 CC = gcc
+
+SRC_CLIENT = client.c
+OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
+
+SRC_SERVER = server.c
+OBJ_SERVER = $(SRC_SERVER:.c=.o)
+
 FLAGS = -Wall -Wextra -Werror
 NAME = minitalk
 
-all: $(NAME)
+all:LIBFT SERVER CLIENT
 
 LIBFT:
 	make -C libft/
 
-$(NAME): LIBFT
-	$(CC) $(FLAGS) -Llibft/ -lft -o client client.c
-	$(CC) $(FLAGS) -Llibft/ -lft -o server server.c 
+CLIENT:$(OBJ_CLIENT) 
+	$(CC) $(OBJ_CLIENT) $(FLAGS) -Llibft/ -lft -o client
+
+SERVER:$(OBJ_SERVER)
+	$(CC) $(OBJ_SERVER) $(FLAGS) -Llibft/ -lft -o server
 
 clean:
 	rm -f *.o 
